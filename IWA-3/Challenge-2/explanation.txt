@@ -19,8 +19,8 @@ scripts.js
 import nwabisa_role from './nwabisa.js';
 import johanes_role  from "./johannes.js";
 import alex_role  from "./alex.js";
--Fixed variable names: 
-("Roles:", nwabisa.role, johanes.role, alex.role) -> ("Roles:", nwabisa_role, johanes_role, alex_role)
+-Fixed variable names and added commas: 
+("Roles:", nwabisa.role, johanes.role, alex.role) -> ("Roles:", nwabisa_role,',', johanes_role,',', alex_role)
 
 index.HTML
 -   <script module="nwabisa">
