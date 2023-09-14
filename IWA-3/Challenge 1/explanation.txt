@@ -1,0 +1,16 @@
+HTML File:
+-Scripts -> Script
+-Scr -> Src
+-Inverted commas needed .js to link to the correct File
+-Added type="module"
+-Added defer
+-Added close tag for Script
+
+
+Config.js:
+-Added Export to both Const
+
+Scripts.js:
+-Added {} around variables being imported
+-Form->From
+-'configuration'-> './configuration.js'
