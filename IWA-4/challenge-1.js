@@ -1,6 +1,6 @@
-let date= 0;
+let date = 0;
 const year = 2050;
-const member= 'student';
+const member = 'student';
 let count = 0;
 
 if (year === 2050) {

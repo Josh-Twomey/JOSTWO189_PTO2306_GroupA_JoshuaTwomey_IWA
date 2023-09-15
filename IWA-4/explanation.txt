@@ -1,0 +1,38 @@
+challenge-1.js
+
+-Changed some const variables to let as they change values later on in the code
+-Changed status variable to member as status is a depricated term
+-Added another variable year to complete task:
+ const date: 2050
+ const status: 'student'
+ const count = 0
+
+ ->
+
+ let date = 0;
+ const year = 2050;
+ const member = 'student';
+ let count = 0;
+
+
+-Added == signs in all if-statements so the if-statement compares vs sets the variable to the new value:
+(date = 2050) -> (year === 2050)
+
+- Closed bracket for consolelog:
+console.log("January", 'New Year’s Day' -> console.log("January", 'New Year’s Day')
+
+-Removed let from all the counts as you cannot reassign a variable:
+
+let count = count + 4 -> count = count + 4
+
+-Added correct variables to consolelog:
+
+console.log('Your status is:', status)
+console.log('The year is:', date)
+console.log('The total holidays is:', count)
+
+->
+
+console.log("Your status is:", member);
+console.log('The year is:', year)
+console.log('The total holidays is:', count)
