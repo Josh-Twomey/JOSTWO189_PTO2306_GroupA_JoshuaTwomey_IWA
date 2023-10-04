@@ -8,5 +8,5 @@ if (nickname.length > 0) {
     display = `, ${nickname}`
 }else if (firstname.length > 0) {
   display = `, ${firstname}`;
-} else 
-{console.log(`Good Morning${display}!`);}
+}  
+console.log(`Good Morning${display}!`);
