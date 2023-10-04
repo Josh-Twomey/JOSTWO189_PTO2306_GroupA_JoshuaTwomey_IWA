@@ -53,30 +53,32 @@ const futureId = 9;
 
 // Do not change code above this comment
 
+// Test if futureID exsists in holidays object
+futureId in holidays ? console.log(holidays[futureId].name):console.log(`ID ${futureId} not created yet`);
 
-if (futureId in holidays) {
-    console.log(holidays[futureId].name);
-} else {
-    console.log(`ID ${futureId} not created yet`);
-}
-
+// Assigned values to copied object (same date as previous christmas in order to change time with variables)
 const copied = {
   id: christmas,
   name: "X-mas Day",
   date: new Date(`25 December ${currentYear} 13:25`),
 };
+// Added let to variables
 let correctDate_hours = 0;
 let correctDate_minutes = 0;
+//.setHours to change the time of set date using variables above
 let correctDate = new Date (copied.date.setHours(correctDate_hours,correctDate_minutes))
 let isEarlier = copied.date < holidays[6].date;
 console.log("New date is earlier:", isEarlier);
+// === true just to validate
 if (isEarlier === true) {
+// used ternary to compare values and display necessary answers
 console.log("ID change:", holidays[christmas].id != copied.id ? copied.id : false);
 console.log("Name change:",holidays[christmas].name != copied.name ? copied.name : false);
 console.log("Date change:",holidays[christmas].date != copied.date ? copied.date : false);
 }
 
 const firstHolidayTimestamp = Math.min(
+  // new Date to convert string date to Date type, added brackets after .getTime function
   new Date (holidays[0].date).getTime(),
   holidays[1].date.getTime(),
   holidays[2].date.getTime(),
@@ -102,16 +104,19 @@ const lastHolidayTimestamp = Math.max(
   holidays[8].date.getTime()
 );
 
-
+/* Value from const above is returned as a number so new Date to convert. 
+which is needed for .getDate() function to work*/
 const firstDay = new Date (firstHolidayTimestamp).getDate();
+// +1 as Javascript starts at 0 instead of 1
 const firstMonth = (new Date (firstHolidayTimestamp).getMonth())+1;
 const lastDay = new Date (lastHolidayTimestamp).getDate();
 const lastMonth = (new Date (lastHolidayTimestamp).getMonth())+1;
-
+//String to convert variable to string for padstart to work.
 console.log(`${String(firstDay).padStart(2,0)}/${String(firstMonth).padStart(2,0)}/${currentYear}`);
 console.log(`${lastDay}/${lastMonth}/${currentYear}`);
-
+//Rounded Math.random answer *8 to make it interger not greater than 8
 const randomHoliday = holidays[Math.round(Math.random() * 8)];
+// Added variables to get the Day and Month of Holiday
 const randomDay = randomHoliday.date.getDate();
 const randomMonth = randomHoliday.date.getMonth() + 1;
 console.log(`${String(randomDay).padStart(2, 0)}/${String(randomMonth).padStart(2,0)}/${currentYear}`);
