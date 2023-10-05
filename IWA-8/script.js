@@ -14,7 +14,7 @@ const sarahPostal = '0310'
 // Only change below this line
 // Added = after leo
 const leo = {
-    // Switched = to :
+    // Switched = to : added , to all lines
     // Removed leoSurname as his surname is declared in leoName
 	name : leoName,
 	balance : leoBalance,
@@ -43,5 +43,6 @@ const sarah = {
 	}
 // Closed the brackets
 }
+// Removed brackets and added .
 console.log(leo, leo.address.postalCode)
 console.log(sarah, sarah.address.postalCode)
