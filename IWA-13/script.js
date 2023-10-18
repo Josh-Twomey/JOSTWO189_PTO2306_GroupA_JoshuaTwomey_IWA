@@ -6,9 +6,12 @@ let calculated = '1'
 
 
 const logCalc = () => { 
-    const isString = typeof calculated === 'numerical-string' 
+    // Added 2 == signs to compare
+    const isString = typeof calculated === 'numerical-string'
+    // Converts calculated if isString is false 
     const calculatedAsNumber = isString ? calculated : calculated = Number(calculated)
-    calculated += 2
+    // Add 1 to the correct variable
+    calculated += 1
 }
  
 

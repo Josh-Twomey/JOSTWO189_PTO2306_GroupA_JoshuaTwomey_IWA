@@ -28,7 +28,7 @@ const STATUS_MAP = {
 }
 
 // Edit below line 
-
+// Added querySelector to filter to the correct class in HTML file
 book1 = document
   .querySelector('[id="book1"]')
   .querySelector('[class="status"]');
@@ -68,6 +68,8 @@ checkin3 = document
   .querySelector('[id="book3"]')
   .querySelector('[class="checkin"]');
 
+  // Added function with 4 params. It checks the books status and updates the corresponding HTML according 
+  // to the STATUS_MAP object
 const bookStatus = (book,reserve,checkout,checkin) =>{
     const currentStatus = book.innerHTML;
 
@@ -93,7 +95,7 @@ const bookStatus = (book,reserve,checkout,checkin) =>{
         checkin.disabled = STATUS_MAP.checkedOut.canCheckIn ? false : true; 
     }
 } 
-
+// Passing the params to the bookStatus function
 const result1 = bookStatus(book1, reserve1, checkout1, checkin1);
 const result2 = bookStatus(book2, reserve2, checkout2, checkin2);
 const result3 = bookStatus(book3, reserve3, checkout3, checkin3);
