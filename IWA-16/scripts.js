@@ -68,10 +68,10 @@ const data = {
 // Only edit below this comment
 
 const createHtml = (athlete) => {
- let firstName = data.response.data[athlete].firstName
- let surname = data.response.data[athlete].surname;
- let id = data.response.data[athlete].id;
- let races = data.response.data[athlete]
+ let firstName = athlete.firstName
+ let surname = athlete.surname;
+ let id = athlete.id;
+ let races = athlete
 
   const fragment = document.createDocumentFragment();
 
@@ -81,17 +81,20 @@ const createHtml = (athlete) => {
 
   const list = document.createElement('dl');
 
-  const day = date.getDate();
-  const month = MONTHS[date.month];
-  const year = date.year;
+  const day = new Date(athlete.races[0].date).getDate();
+  const month = new Date(athlete.races[0].date).getMonth();
+  const year = new Date(athlete.races[0].date).getFullYear();
 
-  first, second, third, fourth = timeAsArray;
-  total = first + second + third + fourth;
+  const total =
+    athlete.races[0].time[0] +
+    athlete.races[0].time[1] +
+    athlete.races[0].time[2] +
+    athlete.races[0].time[3];
 
   const hours = total / 60;
   const minutes = total / hours / 60;
 
-  list.innerHTML = /* html */ `
+  return list.innerHTML = /* html */ `
     Athlete
     ${firstName, surname}
 
@@ -102,12 +105,13 @@ const createHtml = (athlete) => {
     ${day, month, year}
 
     Total Time (Latest)
-    ${hours.padStart(2, 0), minutes}
+    ${String(hours).padStart(2, 0), minutes}
   `;
 
   fragment.appendChild(list);
 }
 
-//[NM372], [SV782] = data
-document.querySelector('[data-athlete="NM372"]').appendChild(createHtml("NM372"));
-document.querySelector('[data-athlete="SV782"]').appendChild(createHtml("SV782"));
+let one = document.querySelector('[data-athlete="NM372"]').innerHTML = (createHtml(data.response.data["NM372"]));
+let two = document.querySelector('[data-athlete="SV782"]').innerHTML = (createHtml(data.response.data["SV782"]));
+
+console.log(createHtml(data.response.data["NM372"]));

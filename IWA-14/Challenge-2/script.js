@@ -1,12 +1,15 @@
 // script.js
-
+// added brackets around params and added return 
 function add  (a,b)  { return a + b }
-
+// changed the minus to multiplication
 function multiply (a,b) { return a * b }
 
 function internal() {
+	// Added the .internal as it references the object 
 	const added = this.add(this.internal.a,this.internal.b)
+	// added multiplication variable
 	const multiplication = this.multiply(added,this.internal.c)
+	// console log multiplication
 	console.log(multiplication)
 }
 
