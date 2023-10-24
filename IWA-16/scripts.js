@@ -67,51 +67,70 @@ const data = {
 
 // Only edit below this comment
 
+
 const createHtml = (athlete) => {
- let firstName = athlete.firstName
- let surname = athlete.surname;
- let id = athlete.id;
- let races = athlete
+  let firstName = athlete.firstName;
+  let surname = athlete.surname;
+  let id = athlete.id;
+  let races = athlete.races.length;
 
   const fragment = document.createDocumentFragment();
 
-  let title = document.createElement('h2');
+  let title = document.createElement("h2");
   title.innerHTML = id;
   fragment.appendChild(title);
 
-  const list = document.createElement('dl');
+  const list = document.createElement("dl");
 
-  const day = new Date(athlete.races[0].date).getDate();
-  const month = new Date(athlete.races[0].date).getMonth();
-  const year = new Date(athlete.races[0].date).getFullYear();
+  let latestDate = 0;
+  
+  for (let i = 0;i < athlete.races.length; i++){
+      
+    if (new Date(athlete.races[i].date) >= new Date(athlete.races[latestDate].date)){
+      latestDate = i
+    } else {
+      latestDate = 0
+    }
+    
+  }
+  
+  const day = new Date(athlete.races[latestDate].date).getDate();
+  const month = MONTHS[new Date(athlete.races[latestDate].date).getMonth()];
+  const year = new Date(athlete.races[latestDate].date).getFullYear();
+  
+  let total = 0
+  for (let j=0; j < athlete.races[latestDate].time.length ; j++){
+    total = total + athlete.races[latestDate].time[j];
+  }
+  
+  let hours = 0;
+  let k = 0;
+  
+  while (k < total)
+  if (total >= 60){
+     hours = hours + 1;
+     total = total - 60;
+     k+=60
+  } else{
+     hours = 0;
+     k+=60;
+  }
+ 
+  const minutes = total;
 
-  const total =
-    athlete.races[0].time[0] +
-    athlete.races[0].time[1] +
-    athlete.races[0].time[2] +
-    athlete.races[0].time[3];
+  return (list.innerHTML = /* html */ `
+    <dt>Athlete: ${firstName} ${surname}</dt>
 
-  const hours = total / 60;
-  const minutes = total / hours / 60;
+    <dt>Total Races: ${races}</dt>
 
-  return list.innerHTML = /* html */ `
-    Athlete
-    ${firstName, surname}
+    <dt>Event Date (Latest): ${day} ${month} ${year}</dt>
 
-    Total Races
-    ${races}
-
-    Event Date (Latest)
-    ${day, month, year}
-
-    Total Time (Latest)
-    ${String(hours).padStart(2, 0), minutes}
-  `;
+    <dt>Total Time (Latest): ${String(hours).padStart(2, 0)}:${String(minutes).padStart(2, 0)}</dt>
+  `);
 
   fragment.appendChild(list);
 }
 
-let one = document.querySelector('[data-athlete="NM372"]').innerHTML = (createHtml(data.response.data["NM372"]));
-let two = document.querySelector('[data-athlete="SV782"]').innerHTML = (createHtml(data.response.data["SV782"]));
+document.querySelector('[data-athlete="NM372"]').innerHTML = (createHtml(data.response.data["NM372"]));
+document.querySelector('[data-athlete="SV782"]').innerHTML = (createHtml(data.response.data["SV782"]));
 
-console.log(createHtml(data.response.data["NM372"]));
