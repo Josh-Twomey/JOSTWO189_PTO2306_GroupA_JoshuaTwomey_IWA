@@ -19,9 +19,6 @@ const getDaysInMonth = (date) => new Date(date.getFullYear(), date.getMonth() + 
 
 // Only edit below 
 
-const nameOfDay = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-const dayte = new Date();
-console.log(nameOfDay[dayte.getDay()])
 
 const createArray = (length) => {
     const result = []
@@ -50,12 +47,12 @@ const createData = () => {
     current.setDate(1)
     
 
-    const startDay = current.getDate()
+    const startDay = current.getDay()
     const daysInMonth = getDaysInMonth(current)
-    
+
 
     const weeks = createArray(5)
-    const days = createArray(daysInMonth)
+    const days = createArray(7)
     const result = []
 
     for (const weekIndex of weeks) {
@@ -66,7 +63,7 @@ const createData = () => {
         })
         
         for (const dayIndex of days) {
-            const day = (dayIndex - startDay) * (weekIndex * 7 + 1)  
+            const day = (dayIndex - startDay) + (weekIndex * 7 ) + 1  
             const isValid = day > 0 && day <= daysInMonth
 
             result[weekIndex].days.push({
@@ -75,9 +72,9 @@ const createData = () => {
             })
     }
 }
-    console.log(result)
+
     return result
-    
+   
 }
 
 const createHtml = (data) => {
@@ -87,17 +84,17 @@ const createHtml = (data) => {
         let inner = ""
         
         inner = addCell(inner, 'table__cell table__cell_sidebar', `Week ${week}`)
-         for (const {dayOfWeek, value} of data) {
+         for (const {dayOfWeek, value} of days) {
             const isToday = new Date().getDate() === value
-            const isWeekend = dayOfWeek === value || dayOfWeek !== value 
+            const isWeekend = dayOfWeek === 1 || dayOfWeek === 7 
             const isAlternate = week % 2 === 0
     
 			let classString = 'table__cell'
 
             if (isToday) classString = `${classString} table__cell_today`;
             if (isWeekend) classString = `${classString} table__cell_weekend`;
-            if (isAlternate) classString = `${classString}table__cell_alternate`;
-            inner = addCell(inner, classString, days[3].dayOfWeek);
+            if (isAlternate) classString = `${classString} table__cell_alternate`;
+            inner = addCell(inner, classString, value);
         }
         
         result = `
@@ -114,5 +111,5 @@ const createHtml = (data) => {
 const current = new Date()
 document.querySelector('[data-title]').innerText = `${MONTHS[current.getMonth()]} ${current.getFullYear()}`
 
-const data = createData()
-document.querySelector('[data-content]').innerHTML = createHtml(data)
+const monthData = createData()
+document.querySelector('[data-content]').innerHTML = createHtml(monthData)
