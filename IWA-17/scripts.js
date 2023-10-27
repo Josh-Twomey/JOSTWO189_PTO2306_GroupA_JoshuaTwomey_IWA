@@ -65,12 +65,12 @@ const createData = () => {
             
         })
         
-        for (let i = 0; i < 7 ; i++) {
-            const day = (i - startDay) * (weekIndex * 7 + 1)  
+        for (const dayIndex of days) {
+            const day = (dayIndex - startDay) * (weekIndex * 7 + 1)  
             const isValid = day > 0 && day <= daysInMonth
 
             result[weekIndex].days.push({
-                dayOfWeek: days[i+weekIndex] + 1,
+                dayOfWeek: dayIndex + 1,
                 value: isValid ? day : '',
             })
     }
