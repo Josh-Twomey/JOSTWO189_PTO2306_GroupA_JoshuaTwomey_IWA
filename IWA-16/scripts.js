@@ -69,6 +69,7 @@ const data = {
 
 
 const createHtml = (athlete) => {
+  // assign variables to correct keys
   let firstName = athlete.firstName;
   let surname = athlete.surname;
   let id = athlete.id;
@@ -76,12 +77,13 @@ const createHtml = (athlete) => {
 
   const fragment = document.createDocumentFragment();
 
-  let title = document.createElement("h2");
-  title.innerHTML = id;
+  const title = document.createElement("h2");
+  title.innerHTML = id
   fragment.appendChild(title);
 
   const list = document.createElement("dl");
 
+  // Loops through array to find the latest date
   let latestDate = 0;
   
   for (let i = 0;i < athlete.races.length; i++){
@@ -93,16 +95,16 @@ const createHtml = (athlete) => {
     }
     
   }
-  
+  // Assign latest date to day,month and year
   const day = new Date(athlete.races[latestDate].date).getDate();
   const month = MONTHS[new Date(athlete.races[latestDate].date).getMonth()];
   const year = new Date(athlete.races[latestDate].date).getFullYear();
-  
+  //Add the total time of latest date
   let total = 0
   for (let j=0; j < athlete.races[latestDate].time.length ; j++){
     total = total + athlete.races[latestDate].time[j];
   }
-  
+  //While loop to add hours as total is in minutes
   let hours = 0;
   let k = 0;
   
@@ -110,6 +112,7 @@ const createHtml = (athlete) => {
   if (total >= 60){
      hours = hours + 1;
      total = total - 60;
+     // + 60 = hour
      k+=60
   } else{
      hours = 0;
@@ -118,7 +121,7 @@ const createHtml = (athlete) => {
  
   const minutes = total;
 
-  return (list.innerHTML = /* html */ `
+  list.innerHTML = /* html */ `
     <dt>Athlete: ${firstName} ${surname}</dt>
 
     <dt>Total Races: ${races}</dt>
@@ -126,11 +129,14 @@ const createHtml = (athlete) => {
     <dt>Event Date (Latest): ${day} ${month} ${year}</dt>
 
     <dt>Total Time (Latest): ${String(hours).padStart(2, 0)}:${String(minutes).padStart(2, 0)}</dt>
-  `);
+  `;
 
-  fragment.appendChild(list);
+  fragment.appendChild(list)
+  // return in array format to return 2 nodes created in this function
+  return [title.innerHTML + list.innerHTML];
 }
-
+//Removed data
+//Select correct section in html document and pass correct parameter so that athlete works in the function
 document.querySelector('[data-athlete="NM372"]').innerHTML = (createHtml(data.response.data["NM372"]));
 document.querySelector('[data-athlete="SV782"]').innerHTML = (createHtml(data.response.data["SV782"]));
 
