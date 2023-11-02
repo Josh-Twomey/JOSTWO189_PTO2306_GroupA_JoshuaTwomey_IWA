@@ -52,7 +52,7 @@ const handleAddToggle = (event) => {
 };
 
 const handleAddSubmit = (event) => {
-  event.preventDefault()
+    event.preventDefault()
       document.querySelector('[class="grid__content"]').innerHTML = createOrderHtml(createOrderData());
 };
 
