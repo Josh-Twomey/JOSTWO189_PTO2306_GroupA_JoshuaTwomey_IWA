@@ -70,16 +70,15 @@ const createUniqueId = () => {
  * @param {object} props 
  * @returns {object}
  */
-export const createOrderData = (props) => {
-    const { title, table, column } = props
+export const createOrderData = () => {
 
     return {
-        title,
-        table,
-        column,
-        id: createUniqueId(),
-        created: new Date(),
-    }
+      title: document.querySelector('[class="overlay__input"]').value,
+      table: document.querySelector('[class="overlay__input overlay__input_select"]').value,
+      column: COLUMNS[0],
+      id: createUniqueId(),
+      created: new Date(),
+    };
 }
 
 /**

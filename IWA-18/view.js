@@ -36,7 +36,7 @@ export const createOrderHtml = (order) => {
         </dl>
     `
 
-    return element
+    return element.innerHTML
 }
 
 /**
