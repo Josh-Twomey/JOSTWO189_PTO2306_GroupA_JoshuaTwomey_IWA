@@ -1,6 +1,6 @@
-import { createOrderHtml, html } from "./view.js";
+import { createOrderHtml, html, moveToColumn } from "./view.js";
 
-import { createOrderData } from "./data.js";
+import { COLUMNS, createOrderData, state } from "./data.js";
 /**
  * A handler that fires when a user drags over any element inside a column. In
  * order to determine which column the user is dragging over the entire event
@@ -46,19 +46,56 @@ const handleAddToggle = (event) => {
     if (event.target.innerText === "Add Order"){
         html.add.overlay.show()
     } else if (event.target.innerText === "Cancel") {
-        html.add.overlay.close()
+        html.add.form.reset();
+        html.add.overlay.open = false;
+        html.other.add.focus();
     }
   
 };
 
 const handleAddSubmit = (event) => {
     event.preventDefault()
-      document.querySelector('[class="grid__content"]').innerHTML = createOrderHtml(createOrderData());
+    const formData = new FormData(event.target)
+    const {title , table } = Object.fromEntries(formData)
+    const newOrder = createOrderData({title, table, column: 'ordered'})
+
+    state.orders[newOrder.id] = newOrder
+    const htmlOrder = createOrderHtml(newOrder)
+    html.columns[newOrder.column].appendChild(htmlOrder)
+  
+    html.add.form.reset()
+    html.add.overlay.open = false
+    html.other.add.focus()
+};
+let updateID = 0
+const handleEditToggle = (event) => {
+  if (event.target.className === "order") {
+    html.edit.overlay.show();
+    updateID = event.target.dataset.id
+  } else if (event.target.innerText === "Cancel") {
+    html.edit.form.reset();
+    html.edit.overlay.open = false;
+    html.other.add.focus();
+  }
 };
 
-const handleEditToggle = (event) => {};
-const handleEditSubmit = (event) => {};
-const handleDelete = (event) => {};
+const handleEditSubmit = (event) => {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const { title, table, column } = Object.fromEntries(formData);
+  let updateDiv = document.querySelector('[data-id="' + updateID + '"]')
+  updateDiv.querySelector('[data-order-title]').innerHTML = title
+  updateDiv.querySelector('[data-order-table]').innerHTML = table
+  moveToColumn(updateID,column)
+  html.edit.form.reset();
+  html.edit.overlay.open = false;
+};
+const handleDelete = (event) => {
+  const htmlSource = document.querySelector(`[data-id="${updateID}"]`);
+  htmlSource.remove();
+  html.edit.form.reset();
+  html.edit.overlay.open = false;
+};
 
 html.add.cancel.addEventListener("click", handleAddToggle);
 html.other.add.addEventListener("click", handleAddToggle);
