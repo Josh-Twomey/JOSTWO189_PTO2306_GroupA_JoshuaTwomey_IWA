@@ -1,6 +1,11 @@
-import { createOrderHtml, html, moveToColumn } from "./view.js";
+import {
+  createOrderHtml,
+  html,
+  moveToColumn,
+  updateDraggingHtml,
+} from "./view.js";
 
-import { COLUMNS, createOrderData, state } from "./data.js";
+import { COLUMNS, createOrderData, state, updateDragging } from "./data.js";
 /**
  * A handler that fires when a user drags over any element inside a column. In
  * order to determine which column the user is dragging over the entire event
@@ -31,7 +36,16 @@ const handleDragOver = (event) => {
 };
 
 const handleDragStart = (event) => {};
-const handleDragEnd = (event) => {};
+
+const handleDragEnd = (event) => {
+  let column = ''
+   for (const columnName of COLUMNS) {
+      if (html.area[columnName].style.backgroundColor === "rgba(0, 160, 70, 0.2)")
+        column = html.area[columnName].querySelector('[class="grid__content"]').getAttribute("data-column");
+        html.area[columnName].style.backgroundColor = '';
+   }
+  moveToColumn(event.target.dataset.id, column);
+};
 
 const handleHelpToggle = (event) => {
     if (event.target.className === "help") {
@@ -67,6 +81,7 @@ const handleAddSubmit = (event) => {
     html.add.overlay.open = false
     html.other.add.focus()
 };
+
 let updateID = 0
 const handleEditToggle = (event) => {
   if (event.target.className === "order") {
