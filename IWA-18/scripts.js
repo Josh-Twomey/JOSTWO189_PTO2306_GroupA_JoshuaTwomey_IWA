@@ -34,9 +34,11 @@ const handleDragOver = (event) => {
   updateDragging({ over: column });
   updateDraggingHtml({ over: column });
 };
-
+//Added nothing here
 const handleDragStart = (event) => {};
-
+// When Drag ends the for loop checks for the column that is highlighted green.
+// Sets the column to no colour
+// Moves the div to the column that was highlighted green
 const handleDragEnd = (event) => {
   let column = ''
    for (const columnName of COLUMNS) {
@@ -46,16 +48,20 @@ const handleDragEnd = (event) => {
    }
   moveToColumn(event.target.dataset.id, column);
 };
-
+// Uses event to get the className/InnerText of the button that was selected / clicked
+// Opens and closes the help overlay
 const handleHelpToggle = (event) => {
     if (event.target.className === "help") {
-        html.help.overlay.showModal()
+        html.help.overlay.show()
     } else if (event.target.innerText === "Close"){
         html.help.overlay.close();
+        // Sets the focus to the add button so the user can use space/enter to select
+        html.other.add.focus();
     }
     
 };
 
+// Same as handleHelpToggle
 const handleAddToggle = (event) => {
     if (event.target.innerText === "Add Order"){
         html.add.overlay.show()
@@ -69,23 +75,30 @@ const handleAddToggle = (event) => {
 
 const handleAddSubmit = (event) => {
     event.preventDefault()
+    // Gets the info from the entries on the form
     const formData = new FormData(event.target)
     const {title , table } = Object.fromEntries(formData)
+    // Calls createOrderData function passing the needed params
     const newOrder = createOrderData({title, table, column: 'ordered'})
-
+    
     state.orders[newOrder.id] = newOrder
+    //Uses createOrderHtml with param from createOrderData
     const htmlOrder = createOrderHtml(newOrder)
+    // Adds the div to the correct column as a row item
     html.columns[newOrder.column].appendChild(htmlOrder)
-  
+    // Closes form and sets focus
     html.add.form.reset()
     html.add.overlay.open = false
     html.other.add.focus()
 };
 
 let updateID = 0
+
 const handleEditToggle = (event) => {
+  // Checks what button is selected
   if (event.target.className === "order") {
     html.edit.overlay.show();
+    //Gets ID of Div for next eventhandler
     updateID = event.target.dataset.id
   } else if (event.target.innerText === "Cancel") {
     html.edit.form.reset();
@@ -95,18 +108,23 @@ const handleEditToggle = (event) => {
 };
 
 const handleEditSubmit = (event) => {
+  // Gets item entries from the Form
   event.preventDefault();
   const formData = new FormData(event.target);
   const { title, table, column } = Object.fromEntries(formData);
+  // QuerySelector to change the innerHtml of correct div
   let updateDiv = document.querySelector('[data-id="' + updateID + '"]')
   updateDiv.querySelector('[data-order-title]').innerHTML = title
   updateDiv.querySelector('[data-order-table]').innerHTML = table
+  // Moves to the column selected in the form
   moveToColumn(updateID,column)
   html.edit.form.reset();
   html.edit.overlay.open = false;
 };
 const handleDelete = (event) => {
+  // Searches for the div selected
   const htmlSource = document.querySelector(`[data-id="${updateID}"]`);
+  // Removes it 
   htmlSource.remove();
   html.edit.form.reset();
   html.edit.overlay.open = false;
