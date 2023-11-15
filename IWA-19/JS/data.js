@@ -1,23 +1,3 @@
-// Code does not work
-// document.addEventListener("DOMContentLoaded", function () {
-//   // Get a reference to the script element
-//   var scriptElement = document.querySelector('script[src="../JS/data.js"]');
-
-//   // Check if the script element exists
-//   if (scriptElement) {
-//     console.log("Exists")
-//     // Add the type="module" attribute
-//     scriptElement.setAttribute("type", "module");
-
-//     // Add the defer attribute
-//     scriptElement.setAttribute("defer", "true");
-//   } else { console.log("No sir")}
-// });
-
-
-
-
-
 export const BOOKS_PER_PAGE = 36;
 
 export const authors = {
