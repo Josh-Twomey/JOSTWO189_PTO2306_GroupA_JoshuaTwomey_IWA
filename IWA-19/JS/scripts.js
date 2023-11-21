@@ -4,11 +4,20 @@ let page = 1;
 let range = [0,36];
 if (!books && !Array.isArray(books)) throw new Error("Source required");
 if (!range && range.length < 2) throw new Error("Range must be an array with two numbers");
-  
+const showMore = document.querySelector("[data-list-button]");
+const updateButtonText = (number) => {
+  showMore.innerHTML = /* html */ [
+    `<span>Show more</span>
+     <span class="list__remaining">(${number - (BOOKS_PER_PAGE * page)})</span>`,
+  ];
+  showMore.disabled = !(books.length - [page * BOOKS_PER_PAGE] > 0);
+};
+
 const createDisplay = (array) => {
   document.querySelector("[data-list-items]").innerHTML = "";
   const fragment = document.createDocumentFragment();
   let extracted = []
+  updateButtonText(array.length);
   if (array.length > 36) {
    extracted = array.slice(range[0], range[1]);
   } else {
@@ -48,14 +57,13 @@ const createDisplay = (array) => {
 
   const bookDisplay = document.querySelector("[data-list-items]");
   bookDisplay.appendChild(fragment);
- // console.log(array.length)
+  
 };
 
 createDisplay(books);
 
-const showMore = document.querySelector('[data-list-button]')
-showMore.innerHTML = "Show more" + (books.length - BOOKS_PER_PAGE);
-showMore.disabled = !(books.length - [page * BOOKS_PER_PAGE] > 0);
+
+
 
 const showMoreBooks = (event) => {
   page = page + 1;
@@ -66,12 +74,11 @@ const showMoreBooks = (event) => {
 }
 
 showMore.addEventListener('click', showMoreBooks)
+ 
+
 
 // Needed?
-// document.querySelector('[data-list-button]').innerHTML = /* html */ [
-//   "<span>Show more</span>",
-//   '<span class="list__remaining"> (${matches.length - [page * BOOKS_PER_PAGE] > 0 ? matches.length - [page * BOOKS_PER_PAGE] : 0})</span>',
-// ];
+// document.querySelector('[data-list-button]').innerHTML = 
 
 
 // EventListener?
